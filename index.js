@@ -37,17 +37,22 @@ function cleanAllTest() {
     groupIdx = 0;
 }
 
-function expect(input) {
-    return ({
-        isEqual(output) {
-            const res = JSON.stringify(input) === JSON.stringify(output);
-            if(res) {
-                return true;
-            };
-            throw new Error(`Test failed: ${input} no equal to ${output}`);
-        }
-    })
-}
+  function expect(input) {
+      let _reverseMatch = false
+      return ({
+          isEqual(output) {
+              const res = _reverseMatch ? JSON.stringify(input) !== JSON.stringify(output) : JSON.stringify(input) === JSON.stringify(output);
+              if(res) {
+                  return true;
+              };
+              throw new Error(`Test failed: ${input} no equal to ${output}`);
+          },
+          get not() {
+            _reverseMatch = true
+            return this
+          },
+      })
+  }
 
 let isInGroup = false;
 function group(groupName = '', cb) {
