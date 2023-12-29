@@ -45,7 +45,7 @@ function cleanAllTest() {
               if(res) {
                   return true;
               };
-              throw new Error(`Test failed: ${input} no equal to ${output}`);
+              throw new Error(`Test failed: ${JSON.stringify(input)} no equal to ${JSON.stringify(output)}`);
           },
           get not() {
             _reverseMatch = true
